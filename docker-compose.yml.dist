@@ -1,0 +1,17 @@
+version: '2'
+
+networks:
+    ldap:
+        external:
+            name: slapd_net
+
+services:
+    saslauthd:
+        build: .
+        environment:
+            - "SASLAUTHD_LDAP_SERVER=example.com"
+            - "SASLAUTHD_LDAP_BINDDN=uid=sasl,ou=Services,dc=example,dc=com"
+            - "SASLAUTHD_LDAP_BINDPW=changeme"
+            - "SASLAUTHD_LDAP_BASE=ou=People,dc=example,dc=com"
+        networks:
+            - ldap
